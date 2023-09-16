@@ -146,7 +146,7 @@ resource "aws_security_group" "db_sg" {
 
 #Create EC2 instances in public subnets
 resource "aws_instance" "Pub2a_ec2" {
-  ami                         = "ami-0df7a207adb9748c7"
+  ami                         = "ami-0b4d246bdfc7ac57b"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.Public_sub2a.id
@@ -163,7 +163,7 @@ resource "aws_instance" "Pub2a_ec2" {
 }
 
 resource "aws_instance" "Pub2b_ec2" {
-  ami                         = "ami-0df7a207adb9748c7"
+  ami                         = "ami-0b4d246bdfc7ac57b"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.Public_sub2b.id
