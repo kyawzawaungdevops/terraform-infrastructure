@@ -179,23 +179,45 @@ resource "aws_instance" "Pub2b_ec2" {
     EOF
 }
 
-# Create a Database instance
-resource "aws_db_instance" "db_instance" {
-  allocated_storage      = 10
-  db_name                = "my_private_db"
-  engine                 = "mysql"
-  engine_version         = "5.7"
-  instance_class         = "db.t2.micro"
-  username               = "projectTerraform"
-  password               = "Terraform1234"
-  parameter_group_name   = "default.mysql5.7"
-  db_subnet_group_name   = "db_sub_grp"
-  vpc_security_group_ids = [aws_security_group.my_vpc_sg.id]
-  skip_final_snapshot    = true
+#Create an ALB target group
+resource "aws_lb_target_group" "alb-TG" {
+  name     = "alb-TG"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.my_vpc.id
 }
 
-#Create RDS instance subnet group
-resource "aws_db_subnet_group" "db_sub_grp" {
-  name       = "db_sub_grp"
-  subnet_ids = [aws_subnet.db_private_sub2a.id, aws_subnet.Private_sub2b.id]
+#Create Load balancer
+resource "aws_lb" "my-aws-alb" {
+  name               = "my-aws-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.my_vpc_sg.id]
+  subnets            = [aws_subnet.Public_sub2a.id, aws_subnet.Public_sub2b.id]
+}
+
+# Create Load balancer listner rule
+resource "aws_lb_listener" "lb_lst" {
+  load_balancer_arn = aws_lb.my-aws-alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb-TG.arn
+  }
+}
+
+#Load balancer-Target group attachment
+resource "aws_lb_target_group_attachment" "my-aws-alb" {
+  target_group_arn = aws_lb_target_group.alb-TG.arn
+  target_id        = aws_instance.Pub2a_ec2.id
+  port             = 80
+}
+
+#Load balancer-Target group attachment
+resource "aws_lb_target_group_attachment" "my-aws-alb2" {
+  target_group_arn = aws_lb_target_group.alb-TG.arn
+  target_id        = aws_instance.Pub2b_ec2.id
+  port             = 80
 }
