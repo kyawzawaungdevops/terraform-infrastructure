@@ -155,15 +155,14 @@ resource "aws_instance" "Pub2a_ec2" {
   user_data = <<-EOF
     #!/bin/bash
     yum update -y
-    yum install -y httpd
-    systemctl start httpd
-    systemctl enable httpd
-    echo "<h1>Code finally Worked.EC2 instance launched in us-west-2a!!!</h1>" > var/www/html/index.html
+    sudo usermod -aG docker ubuntu
+    sudo systemctl restart docker
+    sudo docker run -itd -p 80:8080 testingkyaw/petclinic:4.0
     EOF
 }
 
 resource "aws_instance" "Pub2b_ec2" {
-  ami                         = ""
+  ami                         = "ami-0509b7310d68e5678"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.Public_sub2b.id
