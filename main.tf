@@ -171,11 +171,9 @@ resource "aws_instance" "Pub2b_ec2" {
 
   user_data = <<-EOF
     #!/bin/bash
-    yum update -y
-    yum install -y httpd
-    systemctl start httpd
-    systemctl enable httpd
-    echo "<h1>Code finally Worked.EC2 instance launched in us-west-2b!!!</h1>" > var/www/html/index.html
+    sudo usermod -aG docker ubuntu
+    sudo systemctl restart docker
+    sudo docker run -itd -p 80:8080 testingkyaw/petclinic:4.0
     EOF
 }
 
