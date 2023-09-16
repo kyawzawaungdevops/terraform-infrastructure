@@ -12,7 +12,7 @@ pipeline {
 
                         // Run 'terraform init' to initialize the project
                         
-                        sh 'terraform destroy'
+                  
                         sh 'terraform init'
                     }
                 }
