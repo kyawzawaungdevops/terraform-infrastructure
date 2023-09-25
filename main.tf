@@ -1,7 +1,7 @@
 provider "aws" {
   region  = "ap-southeast-2"
-  access_key = "AKIA5PT6ZAMWZNNYKQWN"     # Replace with your IAM user's access key
-  secret_key = "Pikdf8oJzhKzTakp74JqaZOUZiP0+erJa/6BmAeH"     # Replace with your IAM user's secret key
+  access_key = "AKIAZ6UCENGU4M6JZEWM"     # Replace with your IAM user's access key
+  secret_key = "Z6NxLJ2WpfC/6TYdeL2+4KQOGX9WS5yi8aAWrGsn"     # Replace with your IAM user's secret key
 }
 
 #Create VPC
