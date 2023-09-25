@@ -1,5 +1,5 @@
 provider "aws" {
-  region  = "ap-southeast-2"
+  region  = "us-west-2"
   access_key = "AKIAZ6UCENGU4M6JZEWM"     # Replace with your IAM user's access key
   secret_key = "Z6NxLJ2WpfC/6TYdeL2+4KQOGX9WS5yi8aAWrGsn"     # Replace with your IAM user's secret key
 }
