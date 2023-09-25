@@ -41,7 +41,7 @@ pipeline {
                         // Apply the Terraform execution plan (use 'auto-approve' for non-interactive execution)
                 
                         sh 'terraform apply -auto-approve'
-                        sh 'terraform destroy -auto-approve'
+                        //sh 'terraform destroy -auto-approve'
                         
                     }
                 }
