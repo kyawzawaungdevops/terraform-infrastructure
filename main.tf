@@ -155,7 +155,7 @@ resource "aws_instance" "Pub2a_ec2" {
   user_data = <<-EOF
     #!/bin/bash
     yum update -y
-    sudo usermod -aG docker ubuntu
+    sudo usermod -aG docker ec2-user
     sudo systemctl restart docker
     sudo docker run -itd -p 80:8080 testingkyaw/petclinic:4.0
     EOF
@@ -170,7 +170,8 @@ resource "aws_instance" "Pub2b_ec2" {
 
   user_data = <<-EOF
     #!/bin/bash
-    sudo usermod -aG docker ubuntu
+    yum update -y
+    sudo usermod -aG docker ec2-user
     sudo systemctl restart docker
     sudo docker run -itd -p 80:8080 testingkyaw/petclinic:4.0
     EOF
