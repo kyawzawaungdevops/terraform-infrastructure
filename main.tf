@@ -199,7 +199,10 @@ resource "aws_lb_listener" "lb_lst" {
   load_balancer_arn = aws_lb.my-aws-alb.arn
   port              = "443"
   protocol          = "HTTPS"
-  
+    default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb-TG.arn
+  }
   ssl_policy        = "ELBSecurityPolicy-2016-08" 
 
   # Specify the ARN of  SSL/TLS certificate 
