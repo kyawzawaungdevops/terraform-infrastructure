@@ -197,8 +197,8 @@ resource "aws_lb" "my-aws-alb" {
 # Create Load balancer listner rule
 resource "aws_lb_listener" "lb_lst" {
   load_balancer_arn = aws_lb.my-aws-alb.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
 
   default_action {
     type             = "forward"
