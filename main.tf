@@ -122,6 +122,20 @@ resource "aws_security_group" "my_vpc_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port   = 443
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -187,8 +201,8 @@ resource "aws_instance" "Pub2b_ec2" {
 #Create an ALB target group
 resource "aws_lb_target_group" "alb-TG" {
   name     = "alb-TG"
-  port     = 80
-  protocol = "HTTP"
+  port     = 443
+  protocol = "HTTPS"
   vpc_id   = aws_vpc.my_vpc.id
 }
 
@@ -220,12 +234,12 @@ resource "aws_lb_listener" "lb_lst" {
 resource "aws_lb_target_group_attachment" "my-aws-alb" {
   target_group_arn = aws_lb_target_group.alb-TG.arn
   target_id        = aws_instance.Pub2a_ec2.id
-  port             = 80
+  port             = 443
 }
 
 #Load balancer-Target group attachment
 resource "aws_lb_target_group_attachment" "my-aws-alb2" {
   target_group_arn = aws_lb_target_group.alb-TG.arn
   target_id        = aws_instance.Pub2b_ec2.id
-  port             = 80
+  port             = 443
 }
