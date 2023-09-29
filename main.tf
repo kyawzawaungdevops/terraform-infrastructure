@@ -193,9 +193,3 @@ resource "aws_lb_target_group_attachment" "my-aws-alb" {
   port             = 80
 }
 
-#Load balancer-Target group attachment
-resource "aws_lb_target_group_attachment" "my-aws-alb2" {
-  target_group_arn = aws_lb_target_group.alb-TG.arn
-  target_id        = aws_instance.Pub2b_ec2.id
-  port             = 80
-}
