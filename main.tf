@@ -39,14 +39,14 @@ resource "aws_subnet" "Public_sub2b" {
 }
 
 #Create Private subnet #1
-resource "aws_subnet" "db_private_sub2a" {
+resource "aws_subnet" "private_sub2a" {
   vpc_id                  = aws_vpc.my_vpc.id
   cidr_block              = "10.0.3.0/24"
   map_public_ip_on_launch = false
   availability_zone       = "us-west-2a"
 
   tags = {
-    Name = "Db_Private_sub2a"
+    Name = "Private_sub2a"
   }
 }
 
@@ -55,7 +55,7 @@ resource "aws_subnet" "Private_sub2b" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.0.4.0/24"
   availability_zone = "us-west-2b"
-
+  map_public_ip_on_launch = false
   tags = {
     Name = "Private_sub2b"
   }
@@ -129,7 +129,7 @@ resource "aws_instance" "private2a_ec2" {
   ami                         = "ami-08e8d3a3c2a73ae76"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
-  subnet_id                   = aws_subnet.Public_sub2a.id
+  subnet_id                   = aws_private_sub2a.id
   security_groups             = [aws_security_group.my_vpc_sg.id]
 
   user_data = <<-EOF
@@ -145,7 +145,7 @@ resource "aws_instance" "private2b_ec2" {
   ami                         = "ami-08e8d3a3c2a73ae76"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
-  subnet_id                   = aws_subnet.Public_sub2b.id
+  subnet_id                   = aws_subnet.private_sub2b.id
   security_groups             = [aws_security_group.my_vpc_sg.id]
 
   user_data = <<-EOF
